@@ -3,7 +3,6 @@
 **Group members:**
 - Jesper Knudsen
 - Philip Refslund
-- nej
 
 This repository contains  
 1. Inaugural project. 
