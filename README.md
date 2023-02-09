@@ -1,9 +1,9 @@
-# \[Group name\]
+# \[Hold10\]
 
 **Group members:**
-- A
-- B
-- C
+- Jesper Knudsen
+- Philip Refslund
+- nej
 
 This repository contains  
 1. Inaugural project. 
