@@ -4,6 +4,8 @@ from types import SimpleNamespace
 import numpy as np
 from scipy import optimize
 
+import sympy as sp
+
 import pandas as pd 
 import matplotlib.pyplot as plt
 
@@ -54,7 +56,7 @@ class HouseholdSpecializationModelClass:
         C = par.wM*LM + par.wF*LF
 
         # b. home production
-        H = HM**(1-par.alpha)*HF**par.alpha
+        H = sp.Piecewise((HM**(1-par.alpha)*HF**par.alpha, par.sigma == 1), (min(HM, HF), par.sigma == 0), (((1-par.alpha)*HM**((par.sigma-1)/par.sigma)+par.alpha*HF**((par.sigma-1)/par.sigma))**(par.sigma/(par.sigma-1)), par.sigma != 1 or par.sigma != 0))
 
         # c. total consumption utility
         Q = C**par.omega*H**(1-par.omega)
