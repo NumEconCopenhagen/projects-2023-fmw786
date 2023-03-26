@@ -1,10 +1,7 @@
-
 from types import SimpleNamespace
 
 import numpy as np
 from scipy import optimize
-
-import sympy as sp
 
 import pandas as pd 
 import matplotlib.pyplot as plt
@@ -56,7 +53,16 @@ class HouseholdSpecializationModelClass:
         C = par.wM*LM + par.wF*LF
 
         # b. home production
-        H = sp.Piecewise((HM**(1-par.alpha)*HF**par.alpha, par.sigma == 1), (min(HM, HF), par.sigma == 0), (((1-par.alpha)*HM**((par.sigma-1)/par.sigma)+par.alpha*HF**((par.sigma-1)/par.sigma))**(par.sigma/(par.sigma-1)), par.sigma != 1 or par.sigma != 0))
+        H = np.nan
+
+        power = (par.sigma - 1)/par.sigma
+
+        if par.sigma == 1:
+            H = HM**(1-par.alpha)*HF**par.alpha
+        elif par.sigma == 0:
+            H = np.fmin(HM, HF)
+        else: 
+            H = (  (1-par.alpha)  * (HM+0.00000000001) **(power) + par.alpha * (HF+0.0000000001)**(power)  )**(1/power)
 
         # c. total consumption utility
         Q = C**par.omega*H**(1-par.omega)
@@ -108,27 +114,108 @@ class HouseholdSpecializationModelClass:
 
         return opt
 
+
+
     def solve(self,do_print=False):
         """ solve model continously """
 
-        pass    
+        par = self.par
+        sol = self.sol
+        opt = SimpleNamespace()
+    
+    # a. objective function 
+        def obj(x):
+            LM, HM, LF, HF = x
+            return - self.calc_utility(LM, HM, LF, HF)
+    
+    #b. Constraints and Bounds (to minimize) 
+        def constraints(x):
+            LM, HM, LF, HF = x
+            return [24 - LM-HM, 24 -LF-HF]
+    
+
+        constraints = ({'type': 'ineq', 'fun':constraints}) 
+        bounds = ((0,24), (0,24), (0,24), (0,24))
+
+        initial_guess = [6,6,6,6]
+
+    #c. Solver 
+        solution = optimize.minimize(obj, initial_guess, method="SLSQP", bounds=bounds, constraints=constraints, tol = 0.000000001)
+
+        opt.LM = solution.x[0]
+        opt.HM = solution.x[1]
+        opt.LF = solution.x[2]
+        opt.HF = solution.x[3]
+        
+        return opt
+
+
+
+
+
 
     def solve_wF_vec(self,discrete=False):
         """ solve model for vector of female wages """
+        
+        par = self.par
+        sol = self.sol
+        
+        results = np.zeros(par.wF_vec.size)
 
-        pass
+        for i, wF in enumerate(par.wF_vec):
+            par.wF = wF
+            
+            opt = self.solve()
+            
+            sol.HM = opt.HM
+            sol.HF = opt.HF
+            results[i] = sol.HF/sol.HM
+            #print(f' the optimal male hours at home and at the job are {opt.HM:2f} and {opt.LM:2f} while for the female {opt.HF:2f} and {opt.LF:2f}')
 
-    def run_regression(self):
-        """ run regression """
+        sol.results = results
 
+        return results
+
+        #return opt.LM, opt.HM, opt.LF, opt.HF 
+
+
+    def solve_wF_vec_2(self,discrete=False):
+        """ solve model for vector of female wages """
+        
         par = self.par
         sol = self.sol
 
+        for i, wF in enumerate(par.wF_vec):
+            par.wF = wF
+            
+            opt = self.solve()
+
+            sol.LM_vec[i] = opt.LM
+            sol.HM_vec[i] = opt.HM
+            sol.LF_vec[i] = opt.LF
+            sol.HF_vec[i] = opt.HF
+
+        return sol 
+
+
+
+    
+    def run_regression(self):
+        """ run regression """
+        
+        #Setting up parameters
+        par = self.par
+        sol = self.sol
+        
+        #Running regression
         x = np.log(par.wF_vec)
         y = np.log(sol.HF_vec/sol.HM_vec)
         A = np.vstack([np.ones(x.size),x]).T
         sol.beta0,sol.beta1 = np.linalg.lstsq(A,y,rcond=None)[0]
-    
+        return sol 
+
+
+
     def estimate(self,alpha=None,sigma=None):
         """ estimate alpha and sigma """
 
