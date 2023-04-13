@@ -7,7 +7,6 @@ Our project is titled "Portefolio Optimization in a CAPM framework" and seeks to
   3) The expected returns
   4) The efficient frontier (along with 1.000.000 random put together portofolios in order to show how they all lay under the EF)
   5) The sharpe ratio of the portefolio 
-  6) 
 
 The **results** of the project can be seen from running [dataproject.ipynb](dataproject.ipynb).
 
