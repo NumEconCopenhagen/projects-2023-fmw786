@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 
-#Choose 20 random companies
+#Choose 20 companies
 tickers = ["AAPL", "MSFT", "AMZN", "TSLA", "CLX", "CMA", "CTRA", "ELV", "ESS", "EXR", "FANG", "FMC", "FTV", "GOOGL", "GS", "HAL", "IVZ", "JPM", "NWL", "NFLX", ]
 
 #Dowload data for the last 10 years
