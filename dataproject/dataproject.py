@@ -1,5 +1,8 @@
 class eeff:
 
+    def hello_world():
+        print("Hello, world!")
+
     def down():
         #Choose 20 companies
         tickers = ["AAPL", "MSFT", "AMZN", "TSLA", "CLX", "CMA", "CTRA", "ELV", "ESS", "EXR", "FANG", "FMC", "FTV", "GOOGL", "GS", "HAL", "IVZ", "JPM", "NWL", "NFLX", ]
