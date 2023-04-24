@@ -16,3 +16,4 @@ Our data is imported directly from Yahoo Finance with and API and we therefore d
 
 ``pip install matplotlib-venn``
 ``pip install yahoo_fin``
+``pip install PyPortfolioOpt``
