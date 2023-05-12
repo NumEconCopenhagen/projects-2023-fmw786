@@ -1,6 +1,6 @@
 # Model analysis project
 
-Our project is titled **PROJECT TITLE** and is about EXPLAIN.
+Our project is titled **Analyzing the Solow model with human capital accumulation.** and is about the extention to the basic Solow model, where human capital is included.
 
 The **results** of the project can be seen from running [modelproject.ipynb](modelproject.ipynb).
 
