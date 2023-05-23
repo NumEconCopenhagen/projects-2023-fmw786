@@ -12,13 +12,9 @@ class HumanCapitalSolowModelClass:
         if do_print: print('initializing the model:')
 
         self.par = SimpleNamespace()
-        self.path = SimpleNamespace()
 
         if do_print: print('calling .setup()')
         self.setup()
-
-        if do_print: print('calling .allocate()')
-        self.allocate()
      
     def setup(self):
         """ baseline parameters """
@@ -41,22 +37,11 @@ class HumanCapitalSolowModelClass:
         # d. misc
         par.Tpath = 500 # length of transition path.
 
-    def allocate(self):
-        """ allocate arrays for transition path """
-        
-        par = self.par
-        path = self.path
-
-        allvarnames = ['Y', 'K', 'H', 'K_lag', 'H_lag']
-        for varname in allvarnames:
-            path.__dict__[varname] =  np.nan*np.ones(par.Tpath)
-
     def trans_eqs(self, K, H):
         """Input is the values of K and H, and the values of the parameters as described in the analytical section. 
         Output is the two transition equations for K and H, respectively."""
 
         par = self.par
-        path = self.path
         
         # Transition equation for K:
         trans_eq_K = (1 / ((1 + par.n) * (1 + par.g))) * (par.s_K * K**par.alpha * H**par.phi + (1 - par.delta) * K) - K
@@ -71,8 +56,6 @@ class HumanCapitalSolowModelClass:
         """Find steady state"""
 
         par = self.par
-        path = self.path
-
         
         # Solving the model using optimize.root:
         objective = lambda x: self.trans_eqs(x[0], x[1])
@@ -97,7 +80,6 @@ class HumanCapitalSolowModelClass:
         """Simulate transition path for k, h and y"""
 
         par = self.par
-        path = self.path
 
         # Time
         T = np.arange(0, par.Tpath)
@@ -139,7 +121,6 @@ class HumanCapitalSolowModelClass:
         """ Simulate the effect of a permanent increase in the savings rate for human capital """
 
         par = self.par
-        path = self.path
 
         # Time
         par.newTpath = 1000  # length new of transition path.
@@ -190,7 +171,6 @@ class HumanCapitalSolowModelClass:
         """Find steady state consumption"""
 
         par = self.par
-        path = self.path
 
         # Solving the model using optimize.root:
         objective = lambda x: self.trans_eqs(x[0], x[1])
