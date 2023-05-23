@@ -15,4 +15,8 @@ The **results** of the project can be seen from running [dataproject.ipynb](data
 
 4. **Exam project.** Where we solve the exam
 
-****Peer feedback****
+
+**Peer feedback**
+  For the Inaugural project we gave feedback to the two groups: _sahshi-buhle_ and _kscd_
+  For the Data project we gave feedback to the two groups: _kscd_ and _team-copenhagen_
+  For the Model project we gave feedback to the two groups: _jacob-per_ and _latin-power_
