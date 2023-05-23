@@ -14,3 +14,5 @@ The **results** of the project can be seen from running [dataproject.ipynb](data
 3. **Model project.** We model and analyze the **Solow model with human capital accumulation**. The **results** of the project can be seen from running [modelproject.ipynb](modelproject.ipynb) and the associated python file [modelproject.py](https://github.com/NumEconCopenhagen/projects-2023-fmw786/blob/main/modelproject/modelproject.py)
 
 4. **Exam project.** Where we solve the exam
+
+***Peer feedback***
