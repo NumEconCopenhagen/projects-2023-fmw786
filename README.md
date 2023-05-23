@@ -15,4 +15,4 @@ The **results** of the project can be seen from running [dataproject.ipynb](data
 
 4. **Exam project.** Where we solve the exam
 
-***Peer feedback***
+****Peer feedback****
