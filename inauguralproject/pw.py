@@ -72,10 +72,10 @@ class HouseholdSpecializationModelClass:
         utility = np.fmax(Q,1e-8)**(1-par.rho)/(1-par.rho)
 
         # d. disutlity of work
-        epsilon_ = 1+1/par.epsilon
+        eps = 1+1/par.epsilon
         TM = LM+HM
         TF = LF+HF
-        disutility = par.nu*(TM**epsilon_/epsilon_+TF**epsilon_/epsilon_)
+        disutility = par.nu*(TM**eps/eps+TF**eps/eps)
         
         return utility - disutility
 
@@ -86,20 +86,20 @@ class HouseholdSpecializationModelClass:
         sol = self.sol
         opt = SimpleNamespace()
         
-        # a. all possible choices
+        #a. define what can be choosen from:
         x = np.linspace(0,24,49)
-        LM,HM,LF,HF = np.meshgrid(x,x,x,x) # all combinations
+        LM,HM,LF,HF = np.meshgrid(x,x,x,x) 
     
-        LM = LM.ravel() # vector
+        LM = LM.ravel()
         HM = HM.ravel()
         LF = LF.ravel()
         HF = HF.ravel()
 
-        # b. calculate utility
+        #b. calculate the utility depending on the choises of LM, HM, LF and HF:
         u = self.calc_utility(LM,HM,LF,HF)
     
-        # c. set to minus infinity if constraint is broken
-        I = (LM+HM > 24) | (LF+HF > 24) # | is "or"
+        #c. add "punishment if one (or two) of the constraints does not hold"
+        I = (LM+HM > 24) | (LF+HF > 24)
         u[I] = -np.inf
     
         # d. find maximizing argument
@@ -152,11 +152,6 @@ class HouseholdSpecializationModelClass:
         
         return opt
 
-
-
-
-
-
     def solve_wF_vec(self,discrete=False):
         """ solve model for vector of female wages """
         
@@ -173,14 +168,10 @@ class HouseholdSpecializationModelClass:
             sol.HM = opt.HM
             sol.HF = opt.HF
             results[i] = sol.HF/sol.HM
-            #print(f' the optimal male hours at home and at the job are {opt.HM:2f} and {opt.LM:2f} while for the female {opt.HF:2f} and {opt.LF:2f}')
 
         sol.results = results
 
         return results
-
-        #return opt.LM, opt.HM, opt.LF, opt.HF 
-
 
     def solve_wF_vec_2(self,discrete=False):
         """ solve model for vector of female wages """
@@ -201,8 +192,6 @@ class HouseholdSpecializationModelClass:
         return sol 
 
 
-
-    
     def run_regression(self):
         """ run regression """
         
