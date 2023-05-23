@@ -12,3 +12,5 @@ This repository contains:
 The **results** of the project can be seen from running [dataproject.ipynb](dataproject.ipynb).
 
 3. **Model project.** We model and analyze the **Solow model with human capital accumulation**. The **results** of the project can be seen from running [modelproject.ipynb](modelproject.ipynb).
+
+4. **Exam project.** Where we solve the exam
