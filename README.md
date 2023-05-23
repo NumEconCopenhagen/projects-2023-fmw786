@@ -4,7 +4,7 @@
 - Jesper Knudsen | KU-id: fmw786
 - Philip Refslund | KU-id: btn636
 
-
+\newline
 This repository contains:
 
 1. **Inaugural project.** Our first encounter with python. The **results** can be seen from running [Inaguralproject.ipynb](https://github.com/NumEconCopenhagen/projects-2023-fmw786/blob/main/inauguralproject/Inaguralproject.ipynb) and the associated python file [pw.py](https://github.com/NumEconCopenhagen/projects-2023-fmw786/blob/main/inauguralproject/pw.py)  
