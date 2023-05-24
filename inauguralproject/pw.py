@@ -251,7 +251,7 @@ class HouseholdSpecializationModelClass:
         sol = self.sol
 
         def obj(q):
-            par.alpha, par.sigma, par.phi = q
+            par.sigma, par.phi = q
 
             self.solve_wF_vec_2()
             self.run_regression()
@@ -260,15 +260,14 @@ class HouseholdSpecializationModelClass:
             return err
 
 
-        bounds = [(0,0.99), (0.01, 2), (1, 5)]
-        initial_guess = (0.5, 1, 2)
+        bounds = [(0.01, 2), (0, 5)]
+        initial_guess = (0.5, 2.5)
 
         reg_opt = optimize.minimize(obj, initial_guess, method='Nelder-Mead', bounds=bounds, tol = 0.000000001)
 
 
-        alpha_hat = reg_opt.x[0]
-        sigma_hat = reg_opt.x[1]
-        phi_hat = reg_opt.x[2]
+        sigma_hat = reg_opt.x[0]
+        phi_hat = reg_opt.x[1]
 
         err = obj(reg_opt.x)
 
@@ -278,5 +277,5 @@ class HouseholdSpecializationModelClass:
         print(f"    Beta0_hat =  {sol.beta0:.2f}")
         print(f"    Beta1_hat =  {sol.beta1:.2f}")
 
-        print(f'This gives the parameters: \n    alpha = {alpha_hat:.2f} \n    sigma = {sigma_hat:.2f} \n    phi = {phi_hat:.2f}')
+        print(f'This gives the parameters: \n    Fixed: alpha = {par.alpha:.2f} \n    sigma = {sigma_hat:.2f} \n    phi = {phi_hat:.2f}')
         print(f' With the squared error {err:.2f}')
