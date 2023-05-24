@@ -8,7 +8,7 @@ Our project is titled "Portefolio Optimization in a CAPM framework" and seeks to
   4) The efficient frontier (along with 1.000.000 random put together portofolios in order to show how they all lay under the efficient frontier)
   5) The sharpe ratio, expected return and volatolity of the optimal portefolio in a simple CAPM-model
 
-The **results** of the project can be seen from running [dataproject.ipynb](dataproject.ipynb).
+The **results** of the project can be seen from running [dataproject.ipynb](dataproject.ipynb) and the associated [dataproject.py](dataproject.py)
 
 Our data is imported directly from Yahoo Finance with and API and we therefore do not have a .CSV-file or something like that. 
 
