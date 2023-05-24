@@ -6,7 +6,7 @@
 
 This repository contains:
 
-1. **Inaugural project.** Our first encounter with python. The **results** can be seen from running _inaugural.ipynb_ and the associated python file _inaugural.py_.
+1. **Inaugural project.** Our first encounter with python. The **results** can be seen from running _inauguralproject.ipynb_ and the associated python file _inauguralproject.py_.
 
 2. **Data project.** We fetch data from **yahoo finance** on **20 companies in S&P500** and our project seeks to put together an optimal portofolio for the 20 companies over the last 10 years in a CAPM framework. Our analysis include computing covariances, expected returns, volatility, efficient frontier, sharpe ratio, etc.
 The **results** of the project can be seen from running _dataproject.ipynb_ and the associated python file _dataproject.py_
