@@ -21,6 +21,9 @@ class HouseholdSpecializationModelClass:
         par.epsilon = 1.0
         par.omega = 0.5 
 
+        # ekstra parameter
+        par.phi = 0
+
         # c. household production
         par.alpha = 0.5
         par.sigma = 1.0
@@ -75,7 +78,7 @@ class HouseholdSpecializationModelClass:
         eps = 1+1/par.epsilon
         TM = LM+HM
         TF = LF+HF
-        disutility = par.nu*(TM**eps/eps+TF**eps/eps)
+        disutility = par.nu*(TM**eps/eps+TF**eps/eps + par.phi*HM) # Where par.phi*HM is the extra parameter for the extra disutility af men working at home.
         
         return utility - disutility
 
@@ -239,4 +242,40 @@ class HouseholdSpecializationModelClass:
         print(f"    Beta1_hat =  {sol.beta1:.2f}")
 
         print(f'This gives the parameters: \n    alpha = {alpha_hat:.2f} \n    sigma = {sigma_hat:.2f}')
+        print(f' With the squared error {err:.2f}')
+
+
+    def estimate_5(self, alpha=None, sigma=None):
+
+        par = self.par
+        sol = self.sol
+
+        def obj(q):
+            par.phi, par.sigma = q
+
+            self.solve_wF_vec_2()
+            self.run_regression()
+
+            err =  (par.beta0_target - sol.beta0)**2 + (par.beta1_target-sol.beta1)**2
+            return err
+
+
+        bounds = [(0, 5),(0.01, 2)]
+        initial_guess = (0.5, 1)
+
+        reg_opt = optimize.minimize(obj, initial_guess, method='Nelder-Mead', bounds=bounds, tol = 0.000000001)
+
+
+        phi_hat = reg_opt.x[0]
+        sigma_hat = reg_opt.x[1]
+
+        err = obj(reg_opt.x)
+
+
+
+        print (f'Minimizing the squared errrors gives the regression:')
+        print(f"    Beta0_hat =  {sol.beta0:.2f}")
+        print(f"    Beta1_hat =  {sol.beta1:.2f}")
+
+        print(f'This gives the parameters: \n    phi = {phi_hat:.2f} \n    sigma = {sigma_hat:.2f}')
         print(f' With the squared error {err:.2f}')
