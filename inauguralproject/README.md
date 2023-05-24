@@ -6,3 +6,4 @@ As we had some proplems with the initial python file, we copied all the content 
 The import statement in inauguralproject.ipynb is therefore changed to import from pw.py
 
 **Dependencies:** Apart from a standard Anaconda Python 3 installation, the project requires no further packages.
+
