@@ -260,8 +260,8 @@ class HouseholdSpecializationModelClass:
             return err
 
 
-        bounds = [(0.01, 2), (-10, 10)]
-        initial_guess = (0.5, 0)
+        bounds = [(0.01, 2), (0.01, 10)]
+        initial_guess = (0.5, 5)
 
         reg_opt = optimize.minimize(obj, initial_guess, method='Nelder-Mead', bounds=bounds, tol = 0.000000001)
 
