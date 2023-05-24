@@ -205,3 +205,38 @@ class HouseholdSpecializationModelClass:
         A = np.vstack([np.ones(x.size),x]).T
         sol.beta0,sol.beta1 = np.linalg.lstsq(A,y,rcond=None)[0]
         return sol 
+    
+    def estimate(self, alpha=None, sigma=None):
+
+        par = self.par
+        sol = self.sol
+
+        def obj(q):
+            par.alpha, par.sigma = q
+
+            self.solve_wF_vec_2()
+            self.run_regression()
+
+            err =  (par.beta0_target - sol.beta0)**2 + (par.beta1_target-sol.beta1)**2
+            return err
+
+
+        bounds = [(0, 0.99),(0.01, 2)]
+        initial_guess = (0.5, 1)
+
+        reg_opt = optimize.minimize(obj, initial_guess, method='Nelder-Mead', bounds=bounds, tol = 0.000000001)
+
+
+        alpha_hat = reg_opt.x[0]
+        sigma_hat = reg_opt.x[1]
+
+        err = obj(reg_opt.x)
+
+
+
+        print (f'Minimizing the squared errrors gives the regression:')
+        print(f"    Beta0_hat =  {sol.beta0:.2f}")
+        print(f"    Beta1_hat =  {sol.beta1:.2f}")
+
+        print(f'This gives the parameters: \n    alpha = {alpha_hat:.2f} \n    sigma = {sigma_hat:.2f}')
+        print(f' With the squared error {err:.2f}')
