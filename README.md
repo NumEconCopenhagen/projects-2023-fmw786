@@ -1,8 +1,4 @@
-# \[Hold10\]
-
-**Group members:**
-- Jesper Knudsen | KU-id: fmw786
-- Philip Refslund | KU-id: btn636
+# \[projects-2023-fmw786\]
 
 This repository contains:
 
